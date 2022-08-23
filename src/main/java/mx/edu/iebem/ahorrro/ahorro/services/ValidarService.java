@@ -16,14 +16,15 @@ public class ValidarService {
     @Autowired
     private ValidarMapper mapper;
 
-
+    
     public ValidarModel getValidarCorreo(String correo) {
         final String sql = "select correo,1,rfc,curp,CONCAT(paterno,' ',materno,' ',nombre) as nombre_completo,telefono from [172.16.20.7].Recibos.dbo.oficina_virtual where correo=?";
         // curp_mapper mapper =new curp_mapper();
         // jdbc.query(sql, mapper, new Object[]{});
         // idalumno_mapper mapper = new idalumno_mapper();
         ValidarModel re = jdbc.queryForObject(sql, mapper, new Object[] { correo });
-        System.out.println(re);
+        
+        // System.out.println(re);
         return re;
     }
 }

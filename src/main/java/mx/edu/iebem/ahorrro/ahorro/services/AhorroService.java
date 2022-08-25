@@ -36,14 +36,16 @@ public class AhorroService {
         
         
     }
+    
+    
 
-
-    public void  GuardarPDFS (String rfcs, MultipartFile ine,MultipartFile comprobante,MultipartFile curps,MultipartFile nombramiento,MultipartFile afore,MultipartFile historia) throws IOException {
+    public void  GuardarPDFS (String rfcs,String curp, String nombre_completo,String correo_institucional,String clave_presupuestal, String centro_trabajo,String telefono_local,String telefono_cel, MultipartFile ine,MultipartFile comprobante,MultipartFile curps,MultipartFile nombramiento,MultipartFile afore,MultipartFile historia) throws IOException {
         // final String uploadsPath="c:\\ahorro";
-         File uploadsPath = new File("C:\\ahorro\\"+rfcs);
-         
+        // File uploadsPath = new File("C:\\ahorro\\"+rfcs);
+         File uploadsPath = new File("/opt/spring_boot_app/ahorro/"+rfcs);
+         if(!uploadsPath.exists()){
         //  linux
-        // File uploadsPath = new File("/opt/spring_boot_app/archivos");
+        // File uploadsPath = new File("/opt/spring_boot_app/ahorro");
          uploadsPath.mkdir();
         //  String ine_path = ine.getOriginalFilename();
         //  String comprobante_path = comprobante.getOriginalFilename();
@@ -78,15 +80,34 @@ public class AhorroService {
          File afore_rem = new File(uploadsPath+"/afore_"+rfcs+".pdf");
          File historia_re = new File(uploadsPath+"/"+historia.getOriginalFilename());
          File historia_rem = new File(uploadsPath+"/historia_"+rfcs+".pdf");
-
+         
+         
         ine_re.renameTo(ine_rem);
         comprobante_re.renameTo(comprobante_rem);
         curp_re.renameTo(curp_rem);
         nombramiento_re.renameTo(nombramiento_rem);
         historia_re.renameTo(historia_rem);
         afore_re.renameTo(afore_rem);
-
-
+        
+        final String sql = "insert into TRegistro_ahorro (rfc,curp,nombre_completo,correo_institucional,clave_presupuestal,centro_trabajo,telefono_local,telefono_cel,ine_ruta,comprobante_ruta,curp_ruta,nombramiento_ruta,afore_ruta,historia_ruta) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        
+        this.jdbc.update(sql, 
+        rfcs,
+        curp,
+        nombre_completo,
+        correo_institucional,
+        clave_presupuestal,
+        centro_trabajo,
+        telefono_local,
+        telefono_cel,
+        ine_rem.toString(),
+        comprobante_rem.toString(),
+        curp_rem.toString(),
+        nombramiento_rem.toString(),
+        afore_rem.toString(),
+        historia_rem.toString()
+        );
+    }
     }
     
 }

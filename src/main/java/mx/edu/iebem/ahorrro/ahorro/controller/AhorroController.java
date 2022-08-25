@@ -36,8 +36,8 @@ public class AhorroController {
       }
    @PostMapping("/GuardarPDF")
    public ResponseEntity<String>   getInsertAhorroPDF(@ModelAttribute AhorroPdfModel ahorro) throws IOException{
-          service.GuardarPDFS(ahorro.getRfc(), ahorro.getIne(), ahorro.getComprobante(), ahorro.getCurps(), ahorro.getNombramiento(), ahorro.getAfore(), ahorro.getHistoria());
+          service.GuardarPDFS(ahorro.getRfc(),ahorro.getCurp(),ahorro.getNombre_completo(),ahorro.getCorreo_institucional(),ahorro.getClave_presupuestal(),ahorro.getCentro_trabajo(),ahorro.getTelefono_local(),ahorro.getTelefono_cel(), ahorro.getIne(), ahorro.getComprobante(), ahorro.getCurps(), ahorro.getNombramiento(), ahorro.getAfore(), ahorro.getHistoria());
 
-   return  new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+   return  new ResponseEntity<>("Successfully uploaded!", HttpStatus.CREATED);
   }
 }
